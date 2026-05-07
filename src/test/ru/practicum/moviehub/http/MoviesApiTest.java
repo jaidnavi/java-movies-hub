@@ -24,7 +24,6 @@ public class MoviesApiTest {
 
     @BeforeAll
     static void beforeAll() {
-        // !!! Реализуйте метод beforeAll
         server = new MoviesServer(new MoviesStore(), 8080);
         server.start();
         client = HttpClient.newBuilder()
@@ -35,7 +34,6 @@ public class MoviesApiTest {
 
     @AfterAll
     static void afterAll() {
-        // !!! Реализуйте метод afterAll
         server.stop();
     }
 
