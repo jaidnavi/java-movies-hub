@@ -4,9 +4,9 @@ import java.util.Objects;
 
 public class Movie {
     private static long sequence = 0;
-    private final String title;
-    private final int year;
-    private final long id;
+    private String title;
+    private int year;
+    private long id;
 
     public Movie(String title, int year) {
         this.title = title;
