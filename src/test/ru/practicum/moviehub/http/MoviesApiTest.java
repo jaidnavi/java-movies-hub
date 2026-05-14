@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
+
 import java.util.ArrayList;
 
 
@@ -293,8 +294,8 @@ public class MoviesApiTest {
         JsonObject errorResponse = gson.fromJson(body, JsonObject.class);
 
         assertTrue(errorResponse.has("error"), "Ответ должен содержать поле 'error'");
-        assertEquals("Ошибка валидации", errorResponse.get("error").getAsString(),
-                "Поле 'error' должно содержать текст 'Ошибка валидации'");
+        assertEquals("Ошибка JSON", errorResponse.get("error").getAsString(),
+                "Поле 'error' должно содержать текст 'Ошибка JSON'");
 
         assertTrue(errorResponse.has("details"), "Ответ должен содержать поле 'details'");
         assertTrue(errorResponse.get("details").isJsonArray(), "Поле 'details' должно быть JSON-массивом");
@@ -333,8 +334,8 @@ public class MoviesApiTest {
         JsonObject errorResponse = gson.fromJson(body, JsonObject.class);
 
         assertTrue(errorResponse.has("error"), "Ответ должен содержать поле 'error'");
-        assertEquals("Ошибка валидации", errorResponse.get("error").getAsString(),
-                "Поле 'error' должно содержать текст 'Ошибка валидации'");
+        assertEquals("Ошибка JSON", errorResponse.get("error").getAsString(),
+                "Поле 'error' должно содержать текст 'Ошибка JSON'");
 
         assertTrue(errorResponse.has("details"), "Ответ должен содержать поле 'details'");
         assertTrue(errorResponse.get("details").isJsonArray(), "Поле 'details' должно быть JSON-массивом");
@@ -373,8 +374,8 @@ public class MoviesApiTest {
         JsonObject errorResponse = gson.fromJson(body, JsonObject.class);
 
         assertTrue(errorResponse.has("error"), "Ответ должен содержать поле 'error'");
-        assertEquals("Ошибка валидации", errorResponse.get("error").getAsString(),
-                "Поле 'error' должно содержать текст 'Ошибка валидации'");
+        assertEquals("Ошибка JSON", errorResponse.get("error").getAsString(),
+                "Поле 'error' должно содержать текст 'Ошибка JSON'");
 
         assertTrue(errorResponse.has("details"), "Ответ должен содержать поле 'details'");
         assertTrue(errorResponse.get("details").isJsonArray(), "Поле 'details' должно быть JSON-массивом");
@@ -432,4 +433,16 @@ public class MoviesApiTest {
                 "Массив должен содержать ошибку валидации года");
     }
 
+    //GET /movies/{id}
+    //возвращает фильм по существующему id;
+    //возвращает ошибку, если фильм не найден;
+    //возвращает ошибку, если id не число.
+    //DELETE /movies/{id}
+    //удаляет фильм по существующему id;
+    //возвращает ошибку, если фильм не найден;
+    //возвращает ошибку, если id не число.
+    //GET /movies?year=YYYY
+    //возвращает фильмы указанного года;
+    //возвращает пустой список, если фильмов с таким годом нет;
+    //возвращает ошибку, если параметр year не число.
 }

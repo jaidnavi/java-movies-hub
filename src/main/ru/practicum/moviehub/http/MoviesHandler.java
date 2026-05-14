@@ -17,6 +17,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.Gson;
 import ru.practicum.moviehub.exception.ValidateException;
+import ru.practicum.moviehub.exception.JsonException;
 
 public class MoviesHandler extends BaseHttpHandler {
     private final Gson gson = new Gson();
@@ -37,7 +38,7 @@ public class MoviesHandler extends BaseHttpHandler {
             if (body.trim().isBlank()) {
                 JsonObject errorResponse = new JsonObject();
                 errorResponse.addProperty("error", "Ошибка валидации");
-                errorResponse.add("details", gson.toJsonTree(List.of("JSON пуст")));
+                errorResponse.add("details", gson.toJsonTree(List.of("Ошибка JSON")));
                 sendJson(ex, 422, gson.toJson(errorResponse));
             }
             try {
@@ -45,26 +46,26 @@ public class MoviesHandler extends BaseHttpHandler {
                 String title = "";
                 int year = -1;
 
-                List<String> validateExceptions = new ArrayList<>();
+                List<String> jsonException = new ArrayList<>();
 
                 if (jsonObject.has("title")) {
                     title = jsonObject.get("title").getAsString();
                 } else {
-                    validateExceptions.add("JSON должен содержать название фильма (title)");
+                    jsonException.add("JSON должен содержать название фильма (title)");
                 }
 
                 if (jsonObject.has("year")) {
                     try {
                         year = jsonObject.get("year").getAsInt();
                     } catch (NumberFormatException exception) {
-                        validateExceptions.add("Параметр year должен быть числом");
+                        jsonException.add("Параметр year должен быть числом");
                     }
                 } else {
-                    validateExceptions.add("JSON должен содержать год фильма (year)");
+                    jsonException.add("JSON должен содержать год фильма (year)");
                 }
 
-                if (validateExceptions.size() > 0) {
-                    throw new ValidateException(validateExceptions, "Ошибка валидации");
+                if (jsonException.size() > 0) {
+                    throw new JsonException(jsonException, "Ошибка JSON");
                 }
 
                 long id = MoviesStore.addMovie(title, year);
@@ -73,10 +74,14 @@ public class MoviesHandler extends BaseHttpHandler {
 
             } catch (JsonSyntaxException exception) {
                 JsonObject errorResponse = new JsonObject();
-                errorResponse.addProperty("error", "Ошибка валидации");
+                errorResponse.addProperty("error", "Ошибка JSON");
                 errorResponse.add("details", gson.toJsonTree(List.of("Некорректный формат JSON")));
                 sendJson(ex, 422, gson.toJson(errorResponse));
-
+            } catch (JsonException exception) {
+                JsonObject errorResponse = new JsonObject();
+                errorResponse.addProperty("error", exception.getMessage());
+                errorResponse.add("details", gson.toJsonTree(exception.getMessages()));
+                sendJson(ex, 422, gson.toJson(errorResponse));
             } catch (ValidateException exception) {
                 JsonObject errorResponse = new JsonObject();
                 errorResponse.addProperty("error", exception.getMessage());
@@ -84,6 +89,9 @@ public class MoviesHandler extends BaseHttpHandler {
                 sendJson(ex, 422, gson.toJson(errorResponse));
 
             }
+        } else {
+            sendNoContent(ex, 405);
+            return;
         }
     }
 }
