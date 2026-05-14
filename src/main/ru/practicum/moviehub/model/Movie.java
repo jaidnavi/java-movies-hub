@@ -1,6 +1,12 @@
 package ru.practicum.moviehub.model;
 
+import java.util.ArrayList;
 import java.util.Objects;
+
+import ru.practicum.moviehub.exception.ValidateException;
+import java.util.List;
+
+import java.time.Year;
 
 public class Movie {
     private static long sequence = 0;
@@ -8,7 +14,26 @@ public class Movie {
     private int year;
     private long id;
 
-    public Movie(String title, int year) {
+    public Movie(String title, int year) throws ValidateException {
+
+        List<String> validateExceptions = new ArrayList<>();
+
+        if (title.isEmpty()) {
+            validateExceptions.add("Название не должно быть пустым");
+        }
+
+        if (title.length() > 100) {
+            validateExceptions.add("Название не должно превышать 100 символов");
+        }
+
+        if (year < 1888 || year > Year.now().getValue() + 1) {
+            validateExceptions.add("Год должен быть между 1888 и " + (Year.now().getValue() + 1));
+        }
+
+        if (validateExceptions.size() > 0) {
+            throw new ValidateException(validateExceptions, "Ошибка валидации");
+        }
+
         this.title = title;
         this.year = year;
         this.id = ++sequence;

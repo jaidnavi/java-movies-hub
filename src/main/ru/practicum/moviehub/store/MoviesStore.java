@@ -3,6 +3,8 @@ package ru.practicum.moviehub.store;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+
+import ru.practicum.moviehub.exception.ValidateException;
 import ru.practicum.moviehub.model.Movie;
 import com.google.gson.Gson;
 
@@ -13,9 +15,10 @@ public class MoviesStore {
         movies = new HashMap<>();
     }
 
-    public static void addMovie(String title, int year) {
+    public static long addMovie(String title, int year) throws ValidateException {
         Movie movie = new Movie(title, year);
         movies.put(movie.getId(), movie);
+        return movie.getId();
     }
 
     public void addMovie(Movie movie) {
@@ -30,11 +33,21 @@ public class MoviesStore {
         movies.remove(id);
     }
 
+
     public static String getAllMoviesAsJson() {
         List<Movie> movieList = new ArrayList<>(movies.values());
         Gson gson = new Gson();
         return gson.toJson(movieList);
     }
+
+    public static String getMovieAsJson(long id) {
+        Movie movie = movies.get(id);
+        List<Movie> movieList = new ArrayList<>();
+        movieList.add(movie);
+        Gson gson = new Gson();
+        return gson.toJson(movieList);
+    }
+
 
     public static void clearMovies() {
         movies.clear();
