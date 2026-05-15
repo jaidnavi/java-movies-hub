@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import ru.practicum.moviehub.exception.ValidateException;
 import ru.practicum.moviehub.model.Movie;
 import com.google.gson.Gson;
+import java.util.stream.Collectors;
 
 public class MoviesStore {
     private static HashMap<Long, Movie> movies;
@@ -21,15 +22,7 @@ public class MoviesStore {
         return movie.getId();
     }
 
-    public void addMovie(Movie movie) {
-        movies.put(movie.getId(), movie);
-    }
-
-    public Movie getMovie(long id) {
-        return movies.get(id);
-    }
-
-    public void deleteMovie(long id) {
+    public static void deleteMovie(long id) {
         movies.remove(id);
     }
 
@@ -40,6 +33,14 @@ public class MoviesStore {
         return gson.toJson(movieList);
     }
 
+    public static String getYearMoviesAsJson(int year) {
+        List<Movie> filteredMovies = movies.values().stream()
+                .filter(movie -> movie.getYear() == year)
+                .collect(Collectors.toList());
+        Gson gson = new Gson();
+        return gson.toJson(filteredMovies);
+    }
+
     public static String getMovieAsJson(long id) {
         Movie movie = movies.get(id);
         List<Movie> movieList = new ArrayList<>();
@@ -48,14 +49,14 @@ public class MoviesStore {
         return gson.toJson(movieList);
     }
 
+    public static boolean movieIdIsExists(long id) {
+        return movies.containsKey(id);
+    }
+
 
     public static void clearMovies() {
         movies.clear();
     }
 
-
-    public HashMap<Long, Movie> getAllMovies() {
-        return movies;
-    }
 
 }

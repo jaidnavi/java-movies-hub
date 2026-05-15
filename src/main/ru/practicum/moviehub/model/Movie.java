@@ -10,9 +10,9 @@ import java.time.Year;
 
 public class Movie {
     private static long sequence = 0;
-    private String title;
+    private final String title;
     private int year;
-    private long id;
+    private final long id;
 
     public Movie(String title, int year) throws ValidateException {
 
@@ -30,7 +30,7 @@ public class Movie {
             validateExceptions.add("Год должен быть между 1888 и " + (Year.now().getValue() + 1));
         }
 
-        if (validateExceptions.size() > 0) {
+        if (!validateExceptions.isEmpty()) {
             throw new ValidateException(validateExceptions, "Ошибка валидации");
         }
 
@@ -49,14 +49,6 @@ public class Movie {
 
     public int getYear() {
         return year;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
     }
 
     @Override
