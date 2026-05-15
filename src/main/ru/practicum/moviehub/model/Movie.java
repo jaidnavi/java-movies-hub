@@ -12,17 +12,20 @@ public class Movie {
     private final String title;
     private int year;
     private final long id;
+    private static final int MAX_TITLE_LENGTH = 100;
+    private static final int MIN_YEAR = 1888;
+    private static final int MAX_YEAR = Year.now().getValue() + 1;
 
     public Movie(String title, int year) throws ValidateException {
         List<String> validateExceptions = new ArrayList<>();
         if (title.isEmpty()) {
             validateExceptions.add("Название не должно быть пустым");
         }
-        if (title.length() > 100) {
-            validateExceptions.add("Название не должно превышать 100 символов");
+        if (title.length() > MAX_TITLE_LENGTH) {
+            validateExceptions.add("Название не должно превышать " + MAX_TITLE_LENGTH + " символов");
         }
-        if (year < 1888 || year > Year.now().getValue() + 1) {
-            validateExceptions.add("Год должен быть между 1888 и " + (Year.now().getValue() + 1));
+        if (year < MIN_YEAR || year > MAX_YEAR) {
+            validateExceptions.add("Год должен быть между " + MIN_YEAR + " и " + MAX_YEAR);
         }
         if (!validateExceptions.isEmpty()) {
             throw new ValidateException(validateExceptions, "Ошибка валидации");
