@@ -24,7 +24,6 @@ abstract class BaseHttpHandler implements HttpHandler {
     protected static final String METHOD_POST_MOVIE = "POST";
     protected static final String METHOD_DELETE_MOVIE = "DELETE";
 
-
     protected void sendJson(HttpExchange ex, ErrorResponse errorResponse, String json) throws IOException {
         byte[] bytes = json.getBytes(StandardCharsets.UTF_8);
         ex.getResponseHeaders().set("Content-Type", CT_JSON);
