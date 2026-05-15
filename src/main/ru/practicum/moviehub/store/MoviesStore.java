@@ -3,13 +3,13 @@ package ru.practicum.moviehub.store;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
-
 import ru.practicum.moviehub.exception.ValidateException;
 import ru.practicum.moviehub.model.Movie;
 import com.google.gson.Gson;
 import java.util.stream.Collectors;
 
 public class MoviesStore {
+
     private static HashMap<Long, Movie> movies;
 
     public MoviesStore() {
@@ -53,10 +53,8 @@ public class MoviesStore {
         return movies.containsKey(id);
     }
 
-
     public static void clearMovies() {
         movies.clear();
     }
-
 
 }

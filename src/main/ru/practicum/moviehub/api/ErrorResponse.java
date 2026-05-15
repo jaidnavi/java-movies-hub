@@ -23,11 +23,9 @@ public class ErrorResponse {
         return errorMessage;
     }
 
-
     public List<String> getDetails() {
         return details;
     }
-
 
     public int getStatusCode() {
         return statusCode;

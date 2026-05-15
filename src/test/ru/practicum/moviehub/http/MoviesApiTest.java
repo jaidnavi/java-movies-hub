@@ -6,23 +6,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.practicum.moviehub.store.MoviesStore;
 import ru.practicum.moviehub.model.Movie;
-
 import java.util.List;
-
 import com.google.gson.Gson;
-
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
-
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 

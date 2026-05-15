@@ -1,19 +1,13 @@
 package ru.practicum.moviehub.http;
 
 import com.sun.net.httpserver.HttpExchange;
-
 import java.io.IOException;
-
 import ru.practicum.moviehub.store.MoviesStore;
 import ru.practicum.moviehub.api.ErrorResponse;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import com.sun.net.httpserver.Headers;
-
 import java.nio.charset.StandardCharsets;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.Gson;
